@@ -264,8 +264,9 @@ class Hugo_Export
     function convert_posts()
     {
         global $post;
-
+            $loopct = 0;
         foreach ($this->get_posts() as $postID) {
+            $loopct++;
             $post = get_post($postID);
             setup_postdata($post);
             $meta = array_merge($this->convert_meta($post), $this->convert_terms($postID));
@@ -279,6 +280,13 @@ class Hugo_Export
             // Hugo doesn't like word-wrapped permalinks
             $output = Spyc::YAMLDump($meta, false, 0);
 
+            // if block to get tags 1 time
+             if ($loopct == "3") {  $output .= "\n---\n";
+                                $output .=  wp_get_post_terms($postID);
+                             }
+            
+            if ($this->include_comments) {
+            
             $output .= "\n---\n";
             $output .= $this->convert_content($post);
             if ($this->include_comments) {
