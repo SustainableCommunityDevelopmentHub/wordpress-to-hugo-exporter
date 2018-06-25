@@ -29,6 +29,16 @@ class ConverterExtra extends Converter
     protected $row = 0;
 
     /**
+     * @var string
+     */
+    protected $tableLookaheadBody;
+
+    /**
+     * @var string
+     */
+    protected $tableLookaheadHeader;
+
+    /**
      * constructor, see Markdownify::Markdownify() for more information
      */
     public function __construct($linksAfterEachParagraph = self::LINK_AFTER_CONTENT, $bodyWidth = MDFY_BODYWIDTH, $keepHTML = MDFY_KEEPHTML)
@@ -163,8 +173,8 @@ class ConverterExtra extends Converter
 
         return $output;
     }
-
-    /**
+	
+	/**
      * handle <iframe> tags parsing
      *
      * @param void
@@ -589,9 +599,6 @@ class ConverterExtra extends Converter
 
     /**
      * handle <a> tags parsing
-     *
-     * @param void
-     * @return void
      */
     protected function getCurrentCssSelector()
     {
@@ -604,6 +611,7 @@ class ConverterExtra extends Converter
             $classes = array_filter($classes);
             $cssSelector .= '.' . join('.', $classes);
         }
+
         return $cssSelector;
     }
 }
